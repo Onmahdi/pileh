@@ -1,6 +1,3 @@
-- name: Check build.gradle.kts
-  run: |
-    grep -R "debugConfig" 
 name: Build Android APK
 
 on:
@@ -28,9 +25,19 @@ jobs:
       - name: Show project files
         run: ls -la
 
+      - name: Search for debugConfig
+        run: |
+          echo "Searching for debugConfig..."
+          grep -Rni "debugConfig" . || echo "No debugConfig found"
+
+      - name: Show app build.gradle.kts
+        run: |
+          echo "========== app/build.gradle.kts =========="
+          cat app/build.gradle.kts
+
       - name: Build APK
         run: |
-          ./gradle-9.3.1/bin/gradle assembleDebug --stacktrace
+          ./gradle-9.3.1/bin/gradle assembleDebug --stacktrace --no-configuration-cache
 
       - name: Upload APK
         uses: actions/upload-artifact@v4

@@ -1,6 +1,6 @@
 - name: Check build.gradle.kts
   run: |
-    grep -R "debugConfig" .
+    grep -R "debugConfig" 
 name: Build Android APK
 
 on:
